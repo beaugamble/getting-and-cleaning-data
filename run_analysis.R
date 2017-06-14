@@ -95,17 +95,15 @@ colNames  = colnames(all_data);
 for (i in 1:length(colNames)) 
 {
       colNames[i] = gsub("\\()","",colNames[i]) # remove all parentheses
-      colNames[i] = gsub("-std$","StdDev",colNames[i])
+      colNames[i] = gsub("-std","StdDev",colNames[i])
       colNames[i] = gsub("-mean","Mean",colNames[i])
       colNames[i] = gsub("^(f)","freq",colNames[i])
       colNames[i] = gsub("^(t)","time",colNames[i])
       colNames[i] = gsub("([Gg]ravity)","Gravity",colNames[i])
       colNames[i] = gsub("([Bb]ody[Bb]ody|[Bb]ody)","Body",colNames[i])
       colNames[i] = gsub("[Gg]yro","Gyro",colNames[i])
-      colNames[i] = gsub("[Aa]cc[Mm]ag","AccMagnitude",colNames[i])
-      colNames[i] = gsub("([Bb]odyaccjerkmag)","BodyAccJerkMagnitude",colNames[i])
-      colNames[i] = gsub("GyroMag","GyroMagnitude",colNames[i])
-      colNames[i] = gsub("JerkMag","JerkMagnitude",colNames[i])
+      colNames[i] = gsub("[Mm]ag","Magnitude",colNames[i])
+      colNames[i] = gsub("[Jj]erk","Jerk",colNames[i])
 };
 
 # Then reassign those new column names to the merged data set
@@ -119,8 +117,8 @@ colnames(all_data) = colNames
 # Remember, I want to exclude the last two columns (67 and 68); these are the activity and subject_ID
 means_data <- ddply(all_data, .(subject_ID, activity), function(x) colMeans(x[, 1:66]))
 
-# Export the tidyData set 
-write.table(averages_data, "averages_data.txt", row.name=FALSE)
+# Export the final tidy data set 
+write.table(means_data, "meansTidyData.txt", row.name=FALSE)
 
 ##############################################################################
 
